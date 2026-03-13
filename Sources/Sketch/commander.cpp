@@ -13,6 +13,7 @@ commander::commander() : current_window_number(0), input_v(6), display(SCREEN_WI
   display.setCursor(0, 0);
   // display.println("TEST");
   // display.display();
+  // ABOBA
 }
 
 commander::~commander(){}
