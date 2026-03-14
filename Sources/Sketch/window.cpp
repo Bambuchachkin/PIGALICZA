@@ -4,7 +4,14 @@ window::window() : next_window_number(0){}
 
 window::~window(){}
 
-int window::get_next_window_number(){return next_window_number;}
+int window::get_next_window_number(){
+  return next_window_number;
+}
+
+bool window::set_next_window_number(int num){
+  next_window_number = num;
+  return true;
+}
 
 bool window::set_display(Adafruit_SSD1306* disp){
   display = disp;

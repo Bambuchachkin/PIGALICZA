@@ -15,6 +15,7 @@ class window{
     virtual ~window();
 
     int get_next_window_number();
+    bool set_next_window_number(int num);
     bool set_display(Adafruit_SSD1306* disp);
     
     virtual bool draw();

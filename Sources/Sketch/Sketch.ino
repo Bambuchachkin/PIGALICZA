@@ -6,10 +6,10 @@
 void input_task(void *pvParameters){
   input_worker Input_worker;
   while(1) {  // Бесконечный цикл - обязательно!
-    Serial.println("Ядро 1 активно");
-    Serial.println(xPortGetCoreID());
-    Serial.println();
-    vTaskDelay(1000 / portTICK_PERIOD_MS); // Задержка 1 секунда
+    // Serial.println("Ядро 1 активно");
+    // Serial.println(xPortGetCoreID());
+    // Serial.println();
+    vTaskDelay(2000 / portTICK_PERIOD_MS); // Задержка 1 секунда
   }
 }
 
@@ -17,10 +17,10 @@ void main_task(void *pvParameters){
   commander Commander;
   while(1) {  // Бесконечный цикл - обязательно!
     Commander.process();
-    Serial.println("Ядро 2 активно");
-    Serial.println(xPortGetCoreID());
-    Serial.println();
-    vTaskDelay(2000 / portTICK_PERIOD_MS); // Задержка 2 секунды
+    // Serial.println("Ядро 2 активно");
+    // Serial.println(xPortGetCoreID());
+    // Serial.println();
+    vTaskDelay(100 / portTICK_PERIOD_MS); // Задержка 2 секунды
   }
 }
 
