@@ -1,5 +1,4 @@
-#ifndef WINDOW_H
-#define WINDOW_H
+#pragma once
 
 #include <vector>
 #include <Adafruit_GFX.h>
@@ -21,5 +20,3 @@ class window{
     virtual bool draw();
     virtual bool process_command(std::vector<int> input_v);
 };
-
-#endif

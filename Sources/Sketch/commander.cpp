@@ -1,7 +1,7 @@
 #include "commander.h"
 
 commander::commander() : current_window_number(1), input_v(6), display(SCREEN_WIDTH, SCREEN_HEIGHT, &SPI, OLED_DC, OLED_RST, OLED_CS){
-  display.setRotation(1);
+  // display.setRotation(1);
   window_v.push_back(new debugging_w());
   // window_v.push_back(new debugging_w());
   window_v.push_back(new menu_w());

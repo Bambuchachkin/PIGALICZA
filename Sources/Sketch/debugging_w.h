@@ -1,15 +1,7 @@
-#ifndef DEBUGGING_W_H
-#define DEBUGGING_W_H
+#pragma once
 
 #include <vector>
 #include "window.h"
-
-// const int X_PIN = 32;
-// const int Y_PIN = 33;
-// const int BUTTON_PIN_1 = 25;
-// const int BUTTON_PIN_2 = 26;
-// const int BUTTON_PIN_3 = 35;
-// const int BUTTON_PIN_4 = 34;
 
 class debugging_w : public window{
   private:
@@ -26,5 +18,3 @@ class debugging_w : public window{
     bool draw() override;
     bool process_command(std::vector<int> input_v) override;
 };
-
-#endif

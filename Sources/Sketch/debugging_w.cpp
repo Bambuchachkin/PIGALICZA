@@ -1,23 +1,10 @@
 #include "debugging_w.h"
 
-debugging_w::debugging_w() : window() {
-  // pinMode(BUTTON_PIN_1, INPUT_PULLUP);
-  // pinMode(BUTTON_PIN_2, INPUT_PULLUP);
-  // pinMode(BUTTON_PIN_3, INPUT_PULLUP);
-  // pinMode(BUTTON_PIN_4, INPUT_PULLUP);
-  // analogReadResolution(12);
-}
+debugging_w::debugging_w() : window() {}
 
 debugging_w::~debugging_w(){};
 
 bool debugging_w::draw(){
-  // x = analogRead(X_PIN);
-  // y = analogRead(Y_PIN);
-  // btn_1 = digitalRead(BUTTON_PIN_1);
-  // btn_2 = digitalRead(BUTTON_PIN_2);
-  // btn_3 = digitalRead(BUTTON_PIN_3);
-  // btn_4 = digitalRead(BUTTON_PIN_4);
-
   display->clearDisplay();
   display->setCursor(0, 0);
   display->print("Joystick_x = ");

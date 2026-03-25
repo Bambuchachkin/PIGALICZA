@@ -1,5 +1,4 @@
-#ifndef INPUT_WORKER_H
-#define INPUT_WORKER_H
+#pragma once
 
 class input_worker{
   private:
@@ -7,5 +6,3 @@ class input_worker{
     input_worker();
     ~input_worker();
 };
-
-#endif

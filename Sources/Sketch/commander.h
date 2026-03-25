@@ -1,5 +1,4 @@
-#ifndef COMMANDER_H
-#define COMMANDER_H
+#pragma once
 
 #include <vector>
 #include <Adafruit_GFX.h>
@@ -38,5 +37,3 @@ class commander{
     bool set_input_v();
     bool process();
 };
-
-#endif
