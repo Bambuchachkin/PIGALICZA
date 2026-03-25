@@ -3,7 +3,11 @@
 
 **Текущий статус:** Разработка аппаратной части завершена. Ключевые объекты графического ядра реализованы и проверены в тестовых сценариях. Ведется разработка игр и интеграция сети.
 
-![](Images/Cover.jpg)
+<!-- ![](Images/Cover.jpg) -->
+
+<p align="center">
+  <img src="Images/Cover.jpg" alt="ESP32 Tetris Console" width="500">
+</p>
 
 <!-- [![Platform](https://img.shields.io/badge/platform-ESP32-blue)](https://www.espressif.com/)
 [![Framework](https://img.shields.io/badge/framework-Arduino-green)](https://www.arduino.cc/)
@@ -82,10 +86,22 @@ ESP32 выступает в роли центрального процессор
 
 Эскиз внешнего вида консоли
 
-![](Images/Sketch.jpg)
+<p align="center">
+  <img src="Images/Sketch.jpg" alt="ESP32 Tetris Console" width="500">
+</p>
+
+<!-- ![](Images/Sketch.jpg) -->
 
 Электронная схема
 
-![](Images/circuit.png)
+<p align="center">
+  <img src="Images/circuit.png" alt="ESP32 Tetris Console" width="500">
+</p>
 
-![](Images/Circuit.jpg)
+<!-- ![](Images/circuit.png) -->
+
+<p align="center">
+  <img src="Images/Circuit.jpg" alt="ESP32 Tetris Console" width="500">
+</p>
+
+<!-- ![](Images/Circuit.jpg) -->
