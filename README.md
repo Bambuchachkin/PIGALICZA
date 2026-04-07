@@ -92,6 +92,12 @@ ESP32 выступает в роли центрального процессор
 
 <!-- ![](Images/Sketch.jpg) -->
 
+<p align="center">
+  <img src="Images/Build.png" alt="ESP32 Tetris Console" width="500">
+</p>
+
+<!-- ![](Images/Sketch.jpg) -->
+
 Электронная схема
 
 <p align="center">
