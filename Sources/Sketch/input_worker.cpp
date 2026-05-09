@@ -9,6 +9,7 @@ input_worker::input_worker()
   buffer[1] = 1;
   mutex = xSemaphoreCreateMutex();
 }
+input_worker::~input_worker(){}
 void input_worker::Reader()
 {
     analogReadResolution(12);
