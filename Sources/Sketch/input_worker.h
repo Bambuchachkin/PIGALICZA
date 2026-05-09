@@ -13,11 +13,11 @@ class input_worker{
   int buffer[ARRSIZE];
   public:
   SemaphoreHandle_t mutex;
-  int arrr1[ARRSIZE];ssss
+  int arrr1[ARRSIZE];
   input_worker();
   ~input_worker();
   void Reader();
-  bool Semofor();
+  void Semofor();
 }
 
 #endif

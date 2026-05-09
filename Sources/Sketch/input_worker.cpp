@@ -3,8 +3,8 @@ input_worker::input_worker()
 {
   memset(buffer, 0, ARRSIZE);
   memset(arrr1, 0, ARRSIZE);
-  arr1[0] = 1;
-  arr1[1] = 1;
+  arrr1[0] = 1;
+  arrr1[1] = 1;
   buffer[0] = 1;
   buffer[1] = 1;
   mutex = xSemaphoreCreateMutex();
@@ -40,7 +40,7 @@ void input_worker::Reader()
       buffer[5] = 1;
     }
 }
-bool input_worker::Semofor()
+void input_worker::Semofor()
 {
   xSemaphoreTake(mutex, portMAX_DELAY);
     for (int i=0; i< ARRSIZE; i++)
