@@ -1,7 +1,11 @@
 
+#define ARRSIZE  6
+
+
 
 #include "input_worker.h"
 #include "commander.h"
+
 
 void input_task(void *pvParameters){
   input_worker Input_worker;
