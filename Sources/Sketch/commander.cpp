@@ -25,27 +25,14 @@ commander::commander() : current_window_number(1), input_v(6), display(SCREEN_WI
 
 commander::~commander(){}
 
-bool commander::set_input_v(){
-  int x = analogRead(X_PIN);
-  int y = analogRead(Y_PIN);
-  if (x>3000){
-    input_v[0] = 1;
-  } else if (x<1000){
-    input_v[0] = -1;
-  } else {
-    input_v[0] = 0;
-  }
-  if (y>3000){
-    input_v[1] = 1;
-  } else if (y<1000){
-    input_v[1] = -1;
-  } else {
-    input_v[1] = 0;
-  }
-  input_v[2] = digitalRead(BUTTON_PIN_1);
-  input_v[3] = digitalRead(BUTTON_PIN_2);
-  input_v[4] = digitalRead(BUTTON_PIN_3);
-  input_v[5] = digitalRead(BUTTON_PIN_4);
+bool commander::set_input_v(SemaphoreHandle_t mutex){
+  xSemaphoreTake(mutex, portMAX_DELAY);
+    for (int i=0; i< ARRSIZE; i++)
+    {
+      input_v[i]=buffer[i];
+    }
+    // конец критической секции
+    xSemaphoreGive(mutex);
   return true;
 }
 
