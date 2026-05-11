@@ -1,19 +1,22 @@
 #include "commander.h"
 
 commander::commander() : current_window_number(1), input_v(6), display(SCREEN_WIDTH, SCREEN_HEIGHT, &SPI, OLED_DC, OLED_RST, OLED_CS){
-  // display.setRotation(1);
-  window_v.push_back(new debugging_w());
-  // window_v.push_back(new debugging_w());
-  window_v.push_back(new menu_w());
-  for (int i = 0; i< window_v.size(); i++){
-    window_v[i]->set_display(&display);
-  }
   SPI.begin(18, 12, 23, OLED_CS);
   display.begin(SSD1306_SWITCHCAPVCC, 0);
   display.clearDisplay();
   display.setTextColor(SSD1306_WHITE);
   display.setTextSize(1);
   display.setCursor(0, 0);
+  
+  // display.setRotation(1);
+  window_v.push_back(new debugging_w());
+  // window_v.push_back(new debugging_w());
+  window_v.push_back(new menu_w());
+  window_v.push_back(new tanks_w());
+
+  for (int i = 0; i< window_v.size(); i++){
+    window_v[i]->set_display(&display);
+  }
 
 
   pinMode(BUTTON_PIN_1, INPUT_PULLUP);
@@ -42,8 +45,8 @@ bool commander::set_input_v(){
   } else {
     input_v[1] = 0;
   }
-  input_v[2] = digitalRead(BUTTON_PIN_1);
-  input_v[3] = digitalRead(BUTTON_PIN_2);
+  input_v[2] = !(digitalRead(BUTTON_PIN_1));
+  input_v[3] = !(digitalRead(BUTTON_PIN_2));
   input_v[4] = digitalRead(BUTTON_PIN_3);
   input_v[5] = digitalRead(BUTTON_PIN_4);
   return true;

@@ -7,6 +7,7 @@
 #include "window.h"
 #include "debugging_w.h"
 #include "menu_w.h"
+#include "tanks_w.h"
 
 #define SCREEN_WIDTH 128
 #define SCREEN_HEIGHT 64

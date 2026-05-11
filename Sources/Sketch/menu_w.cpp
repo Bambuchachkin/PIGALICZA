@@ -1,9 +1,10 @@
 #include "menu_w.h"
 
-menu_w::menu_w() : window(), selected_item_num(0), scroll_offset(0) {
-  items_v.push_back("Tanks");
-  items_v.push_back("Snake");
+menu_w::menu_w() : window(), selected_item_num(0), scroll_offset(0), scroll_available(true) {
+  Serial.println("=== menu_w() ===");
+  items_v.push_back("Debug");
   items_v.push_back("Races");
+  items_v.push_back("Tanks");
 }
 
 menu_w::~menu_w(){}
@@ -55,7 +56,8 @@ bool menu_w::process_command(std::vector<int> input_v){
   int total_items = items_v.size();
   
   // Навигация по джойстику
-  if(input_v[1] == 1) { // Вниз
+  if(input_v[1] == 1 && scroll_available) { // Вниз
+    scroll_available = false;
     if(selected_item_num < total_items - 1) {
       selected_item_num++;
       // Пролистываем вниз если нужно
@@ -63,7 +65,8 @@ bool menu_w::process_command(std::vector<int> input_v){
         scroll_offset++;
       }
     }
-  } else if(input_v[1] == -1) { // Вверх
+  } else if(input_v[1] == -1 && scroll_available) { // Вверх
+    scroll_available = false;
     if(selected_item_num > 0) {
       selected_item_num--;
       // Пролистываем вверх если нужно
@@ -71,15 +74,17 @@ bool menu_w::process_command(std::vector<int> input_v){
         scroll_offset--;
       }
     }
+  } else if(input_v[1] == 0){
+    scroll_available = true;
   }
   
   // Кнопки выбора
-  if(input_v[2] == 0) { // BTN3 - Play
-    next_window_number = 0;
+  if(input_v[2] == 1) { // BTN3 - Play
+    next_window_number = selected_item_num;
   }
-  if(input_v[3] == 0) { // BTN4 - Debug
-    next_window_number = 1;
-  }
+  // if(input_v[3] == 1) { // BTN4 - Debug
+  //   next_window_number = 1;
+  // }
   
   return true;
 }

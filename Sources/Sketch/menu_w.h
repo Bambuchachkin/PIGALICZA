@@ -9,6 +9,7 @@ class menu_w : public window{
     std::vector<const char*> items_v;
     int selected_item_num;
     int scroll_offset;
+    bool scroll_available;
   public:
     menu_w();
     ~menu_w();

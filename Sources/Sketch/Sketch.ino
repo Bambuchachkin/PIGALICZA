@@ -20,7 +20,7 @@ void main_task(void *pvParameters){
     // Serial.println("Ядро 2 активно");
     // Serial.println(xPortGetCoreID());
     // Serial.println();
-    vTaskDelay(100 / portTICK_PERIOD_MS); // Задержка 2 секунды
+    vTaskDelay(30 / portTICK_PERIOD_MS); // Задержка 2 секунды
   }
 }
 
