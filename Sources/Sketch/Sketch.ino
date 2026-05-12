@@ -8,7 +8,11 @@
 
 
 void input_task(void *pvParameters){
-  while(1) {  // Бесконечный цикл - обязательно!
+  while(1) { 
+    input_worker Input_worker;
+    Input_worker.Reader();
+    Input_worker.Semofor(mutex, arrr1);
+     // Бесконечный цикл - обязательно!
     // Serial.println("Ядро 1 активно");
     // Serial.println(xPortGetCoreID());
     // Serial.println();
@@ -18,7 +22,8 @@ void input_task(void *pvParameters){
 
 void main_task(void *pvParameters){
   while(1) {  // Бесконечный цикл - обязательно!
-    Commander.process();
+    commander Commander;
+    Commander.process(mutex, arrr1);
     // Serial.println("Ядро 2 активно");
     // Serial.println(xPortGetCoreID());
     // Serial.println();
@@ -27,9 +32,8 @@ void main_task(void *pvParameters){
 }
 
 void setup() {
-  input_worker Input_worker;
-  commander Commander;
   mutex = xSemaphoreCreateMutex();
+  int arrr1[ARRSIZE];
   Serial.begin(9600);
   delay(1000);
 
