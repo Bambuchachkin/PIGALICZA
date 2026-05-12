@@ -37,9 +37,9 @@ bool debugging_w::process_command(std::vector<int> input_v){
   btn_3 = input_v[4];
   btn_4 = input_v[5];
 
-  if (input_v[3] == 0){
+  if (input_v[3] == 1){
     next_window_number = 1;
-      return true;
+    return true;
   }
 
   return true;
