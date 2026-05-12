@@ -31,16 +31,16 @@ commander::~commander(){}
 bool commander::set_input_v(){
   int x = analogRead(X_PIN);
   int y = analogRead(Y_PIN);
-  if (x>3000){
+  if (x>2500){
     input_v[0] = 1;
-  } else if (x<1000){
+  } else if (x<1500){
     input_v[0] = -1;
   } else {
     input_v[0] = 0;
   }
-  if (y>3000){
+  if (y>2500){
     input_v[1] = 1;
-  } else if (y<1000){
+  } else if (y<1500){
     input_v[1] = -1;
   } else {
     input_v[1] = 0;

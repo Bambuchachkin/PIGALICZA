@@ -19,8 +19,8 @@ const int X_PIN = 32;
 const int Y_PIN = 33;
 const int BUTTON_PIN_1 = 25;
 const int BUTTON_PIN_2 = 26;
-const int BUTTON_PIN_3 = 35;
-const int BUTTON_PIN_4 = 34;
+const int BUTTON_PIN_3 = 21;
+const int BUTTON_PIN_4 = 22;
 
 class commander{
   private:
