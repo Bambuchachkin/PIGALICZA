@@ -15,12 +15,12 @@
 #define OLED_RST    17
 #define OLED_CS     19
 
-const int X_PIN = 32;
-const int Y_PIN = 33;
-const int BUTTON_PIN_1 = 25;
-const int BUTTON_PIN_2 = 26;
-const int BUTTON_PIN_3 = 21;
-const int BUTTON_PIN_4 = 22;
+#define X_PIN 33
+#define Y_PIN 32
+#define BUTTON_PIN_1 26 //25 acept
+#define BUTTON_PIN_2 25 //26 action
+#define BUTTON_PIN_3 21 //21 reject
+#define BUTTON_PIN_4 22 //22 -
 
 class commander{
   private:

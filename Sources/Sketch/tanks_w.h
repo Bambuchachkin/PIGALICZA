@@ -4,22 +4,22 @@
 #include "window.h"
 #include "tanks_g.h"
 
-#define WIDTH  20    // ширина поля (клеток по горизонтали)
-#define HEIGHT 8
+#define WIDTH  42 // полная ширина окна
+#define HEIGHT 16
+#define SCALE 1
+#define W_WIDTH 21 // ширина отображаемого окна
+#define W_HEIGHT 8
 
 class tanks_w : public window{
   private:
-    const int cellW = 6;                 // ширина символа при textSize=1 (6 пикселей)
-    const int cellH = 8;                 // высота символа
-    const int cols = 20;
-    const int rows = 8;
-    // Вычисляем отступы для центровки поля на экране 128x64
-    // int offsetX = (display->width()  - cols * cellW) / 2;
-    // int offsetY = (display->height() - rows * cellH) / 2;
-    int offsetX = 5;
-    int offsetY = 5;
+    const int cellW = 6*SCALE;                 // ширина символа при textSize=1 (6 пикселей)
+    const int cellH = 8*SCALE;                 // высота символа
+    const int cols = W_WIDTH/SCALE/2;
+    const int rows = W_HEIGHT/SCALE/2;
     int** field;
+    int** lend;
     tanks_g* GAME = nullptr;
+    std::vector<int> info;
   public:
     tanks_w();
     ~tanks_w();

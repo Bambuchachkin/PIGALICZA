@@ -1,6 +1,22 @@
 #include "tanks_w.h"
 
-tanks_w::tanks_w() : window(){/*Serial.println("=== tanks_w() ===");*/}
+tanks_w::tanks_w() : window(){
+  int r = 0;
+  lend = new int*[HEIGHT];
+  for (int i = 0; i<HEIGHT; i++){
+    lend[i] = new int[WIDTH];
+  }
+  for (int i =0; i<HEIGHT; i++){
+    for (int j=0; j<WIDTH; j++){
+      r = random(100);
+      if (r%3 == 0){
+        lend[i][j] = 1;
+      } else {
+        lend[i][j] = 0;
+      }
+    }
+  }
+}
 
 tanks_w::~tanks_w(){}
 
@@ -21,13 +37,22 @@ bool tanks_w::draw(){
   display->setTextColor(SSD1306_WHITE);
   display->setCursor(0, 0);
 
+  info = GAME->get_info();
+
   int value = 0;
   char ch;
-  for (int y = 0; y < rows; y++) {
-        for (int x = 0; x < cols; x++) {
+  int x_0 = std::max(info[0]-cols, 0);
+  int y_0 = std::max(info[1]-rows, 0);
+  int x_1 = std::max(std::min(info[0]+cols, WIDTH), W_WIDTH);
+  int y_1 = std::max(std::min(info[1]+rows, HEIGHT), W_HEIGHT);
+  for (int y = y_0; y < y_1; y++) {
+        for (int x = x_0; x < x_1; x++) {
+  // for (int y = 0; y < rows; y++) {
+  //       for (int x = 0; x < cols; x++) {
             value = field[y][x];
             if (value == 0) {
-                ch = '.';          // пусто
+                if (lend[y][x] == 1){ch = '.';}
+                else {ch = ' ';}
             } else if (value == 1) {
                 ch = '#';          // стена
             } else if (value == 2) {
@@ -39,8 +64,8 @@ bool tanks_w::draw(){
                 else
                     ch = '?';
             }
-            int screenX = offsetX + x * cellW;
-            int screenY = offsetY + y * cellH;
+            int screenX = (x-x_0) * cellW;
+            int screenY = (y-y_0) * cellH;
             display->setCursor(screenX, screenY);
             display->print(String(ch));
         }

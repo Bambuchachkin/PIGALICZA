@@ -32,23 +32,23 @@ bool commander::set_input_v(){
   int x = analogRead(X_PIN);
   int y = analogRead(Y_PIN);
   if (x>2500){
-    input_v[0] = 1;
-  } else if (x<1500){
     input_v[0] = -1;
+  } else if (x<1000){
+    input_v[0] = 1;
   } else {
     input_v[0] = 0;
   }
   if (y>2500){
-    input_v[1] = 1;
-  } else if (y<1500){
     input_v[1] = -1;
+  } else if (y<1000){
+    input_v[1] = 1;
   } else {
     input_v[1] = 0;
   }
   input_v[2] = !(digitalRead(BUTTON_PIN_1));
   input_v[3] = !(digitalRead(BUTTON_PIN_2));
-  input_v[4] = digitalRead(BUTTON_PIN_3);
-  input_v[5] = digitalRead(BUTTON_PIN_4);
+  input_v[4] = !digitalRead(BUTTON_PIN_3);
+  input_v[5] = !digitalRead(BUTTON_PIN_4);
   return true;
 }
 
