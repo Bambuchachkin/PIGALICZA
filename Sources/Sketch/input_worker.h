@@ -3,8 +3,8 @@
 #include <cstring>
 #include <Arduino.h>  
 #define ARRSIZE  6
-#define X_PIN  32
-#define Y_PIN  33
+#define X_PIN  33
+#define Y_PIN  32
 #define BUTTON_PIN_1  25
 #define BUTTON_PIN_2  26
 #define BUTTON_PIN_3  21

@@ -5,6 +5,7 @@
 #include <Adafruit_SSD1306.h>
 #include <SPI.h>
 #include "window.h"
+#include "tanks_w.h"
 #include "debugging_w.h"
 #include "menu_w.h"
 #define ARRSIZE  6
@@ -30,6 +31,7 @@ class commander{
     int x = 1700;
     int y = 1700;
   public:
+    unsigned long mill;
     std::vector<int> input_v;
     commander();
     ~commander();

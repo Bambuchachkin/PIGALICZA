@@ -7,8 +7,17 @@ commander::commander() : current_window_number(1), input_v(6), display(SCREEN_WI
   display.setTextColor(SSD1306_WHITE);
   display.setTextSize(1);
   display.setCursor(0, 0);
-}
+  
+  window_v.push_back(new debugging_w());
+  // window_v.push_back(new debugging_w());
+  window_v.push_back(new menu_w());
+  window_v.push_back(new tanks_w());
 
+  for (int i = 0; i< window_v.size(); i++){
+    window_v[i]->set_display(&display);
+  }
+  mill= millis();
+}
 commander::~commander(){}
 
 bool commander::set_input_v(SemaphoreHandle_t mutex, int* arrr1){
@@ -27,6 +36,19 @@ bool commander::process(SemaphoreHandle_t mutex, int* arrr1){
   window_v[current_window_number]->set_next_window_number(current_window_number);
   window_v[current_window_number]->process_command(input_v);
   window_v[current_window_number]->draw();
+  if (current_window_number != (window_v[current_window_number]->get_next_window_number()))
+  {
+    unsigned long timer=millis();
+    if ((timer-mill) > window_v[current_window_number]->record_time)
+    {
+      window_v[current_window_number]->record_time = timer-mill; 
+      window_v[0]->record_times_win[current_window_number] = (timer-mill)/1000;
+      Serial.println("TIMER-MIL:");
+      Serial.println(String(timer-mill));
+      Serial.println(String(window_v[0]->record_times_win[current_window_number]));
+    }
+    mill = timer;
+  }
   current_window_number = window_v[current_window_number]->get_next_window_number();
   return true;
 }

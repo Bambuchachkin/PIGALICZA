@@ -12,11 +12,13 @@ class window{
   public:
     window();
     virtual ~window();
-
+    // unsigned long timer;
+    unsigned long record_time;
+    int record_score;
+    std::vector<unsigned long> record_times_win;
     int get_next_window_number();
     bool set_next_window_number(int num);
     bool set_display(Adafruit_SSD1306* disp);
-    
     virtual bool draw();
     virtual bool process_command(std::vector<int> input_v);
 };

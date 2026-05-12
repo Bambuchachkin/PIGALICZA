@@ -36,8 +36,8 @@ class tanks_g {
     int BTN_FIRE = 0;
 
     Player User;
-    int score = 0;
-    int record = 0;
+    int score;
+    int record;
     int** Field_Matrix = nullptr;
     int** Body_Matrix = nullptr;
 
