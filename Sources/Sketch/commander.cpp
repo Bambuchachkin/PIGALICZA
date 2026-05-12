@@ -25,7 +25,7 @@ commander::commander() : current_window_number(1), input_v(6), display(SCREEN_WI
 
 commander::~commander(){}
 
-bool commander::set_input_v(SemaphoreHandle_t mutex, int (&arrr1)[ARRSIZE]){
+bool commander::set_input_v(SemaphoreHandle_t mutex, int* arrr1){
   xSemaphoreTake(mutex, portMAX_DELAY);
     for (int i=0; i< ARRSIZE; i++)
     {
@@ -36,7 +36,7 @@ bool commander::set_input_v(SemaphoreHandle_t mutex, int (&arrr1)[ARRSIZE]){
   return true;
 }
 
-bool commander::process(SemaphoreHandle_t mutex, int (&arrr1)[ARRSIZE]){
+bool commander::process(SemaphoreHandle_t mutex, int* arrr1){
   set_input_v(mutex, arrr1);
   window_v[current_window_number]->set_next_window_number(current_window_number);
   window_v[current_window_number]->process_command(input_v);

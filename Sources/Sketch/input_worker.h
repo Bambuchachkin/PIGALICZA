@@ -15,7 +15,7 @@ class input_worker{
   input_worker();
   ~input_worker();
   void Reader();
-  void Semofor(SemaphoreHandle_t mutex, int (&arrr1)[ARRSIZE]);
+  void Semofor(SemaphoreHandle_t mutex, int* arrr1);
 }
 
 #endif

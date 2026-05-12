@@ -15,8 +15,8 @@ void input_worker::Reader()
 {
     buffer[0] = !(digitalRead(BUTTON_PIN_1));
     buffer[1] = !(digitalRead(BUTTON_PIN_2));
-    buffer[2] = !digitalRead(BUTTON_PIN_3);
-    buffer[3] = !digitalRead(BUTTON_PIN_4);
+    buffer[2] = !(digitalRead(BUTTON_PIN_3));
+    buffer[3] = !(digitalRead(BUTTON_PIN_4));
     value = analogRead(X_PIN);
     if (value < 1000) 
     {
@@ -44,7 +44,7 @@ void input_worker::Reader()
       buffer[5] = 1;
     }
 }
-void input_worker::Semofor(SemaphoreHandle_t mutex, int (&arrr1)[ARRSIZE])
+void input_worker::Semofor(SemaphoreHandle_t mutex, int* arrr1)
 {
   xSemaphoreTake(mutex, portMAX_DELAY);
     for (int i=0; i< ARRSIZE; i++)

@@ -34,6 +34,6 @@ class commander{
     commander();
     ~commander();
 
-    bool set_input_v(SemaphoreHandle_t mutex, int (&arrr1)[ARRSIZE]);
-    bool process(SemaphoreHandle_t mutex, int (&arrr1)[ARRSIZE]);
+    bool set_input_v(SemaphoreHandle_t mutex, int* arrr1);
+    bool process(SemaphoreHandle_t mutex, int* arrr1);
 };
