@@ -14,13 +14,6 @@ commander::commander() : current_window_number(1), input_v(6), display(SCREEN_WI
   display.setTextColor(SSD1306_WHITE);
   display.setTextSize(1);
   display.setCursor(0, 0);
-
-
-  pinMode(BUTTON_PIN_1, INPUT_PULLUP);
-  pinMode(BUTTON_PIN_2, INPUT_PULLUP);
-  pinMode(BUTTON_PIN_3, INPUT_PULLUP);
-  pinMode(BUTTON_PIN_4, INPUT_PULLUP);
-  analogReadResolution(12);
 }
 
 commander::~commander(){}

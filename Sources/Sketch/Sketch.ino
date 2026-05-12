@@ -13,26 +13,29 @@ struct TaskResources {
 
 void input_task(void *pvParameters){
   TaskResources* resources = (TaskResources*)pvParameters;
+  input_worker Input_worker;
   while(1) { 
-    input_worker Input_worker;
     Input_worker.Reader();
     Input_worker.Semofor(resources->mutex, resources->arrr1);
-     // Бесконечный цикл - обязательно!
-    // Serial.println("Ядро 1 активно");
-    // Serial.println(xPortGetCoreID());
-    // Serial.println();
-    vTaskDelay(2000 / portTICK_PERIOD_MS); // Задержка 1 секунда
+    Serial.println("task1:");
+    Serial.println(Input_worker.buffer[0]);
+    Serial.println(Input_worker.buffer[1]);
+    Serial.println(Input_worker.buffer[2]);
+    Serial.println(Input_worker.buffer[3]);
+    Serial.println(Input_worker.buffer[4]);
+    Serial.println(Input_worker.buffer[5]);
+    // for(int i=0; i<ARRSIZE; i++) Serial.println(resources->arrr1[i]);
+    vTaskDelay(100 / portTICK_PERIOD_MS); // Задержка 1 секунда
   }
 }
 
 void main_task(void *pvParameters){
+  commander Commander;
+  TaskResources* resources = (TaskResources*)pvParameters;
   while(1) {  
-    TaskResources* resources = (TaskResources*)pvParameters;
-    commander Commander;
     Commander.process(resources->mutex, resources->arrr1);
-    // Serial.println("Ядро 2 активно");
-    // Serial.println(xPortGetCoreID());
-    // Serial.println();
+    Serial.println("task2:");
+    for(int i=0; i<ARRSIZE; i++) Serial.println(Commander.input_v[i]);
     vTaskDelay(100 / portTICK_PERIOD_MS); // Задержка 2 секунды
   }
 }
