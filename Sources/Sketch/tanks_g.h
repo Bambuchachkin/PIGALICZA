@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <vector>
 
-// ==================== Настройки ====================
 #define BOT_COUNT 8
 #define BULLET_COUNT 10
 #define PAUSE 3

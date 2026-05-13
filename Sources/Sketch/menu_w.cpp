@@ -45,7 +45,7 @@ bool menu_w::draw(){
   // Подсказки внизу
   display->setTextColor(SSD1306_WHITE);
   display->setCursor(0, 54);
-  display->print("down:Play up:Esc");
+  display->print("d:Play u:Esc r:pause");
   
   display->display();
   return true;
@@ -80,23 +80,17 @@ bool menu_w::process_command(std::vector<int> input_v){
   
   // Кнопки выбора
   if(input_v[2] == 1) {
-    if (selected_item_num == 0){
-      next_window_number = 0;
+    switch(selected_item_num){
+      case 0: 
+        next_window_number = 0;
+        break;
+      case 1:
+        next_window_number = 2;
+        break;
+      case 2:
+        next_window_number = 3;
+        break;
     }
-    if (selected_item_num == 1){
-      next_window_number = 2;
-    }
-    if (selected_item_num == 2){
-      next_window_number = 3;
-    }
-    // switch(selected_item_num){
-    //   case 0: 
-    //     next_window_number = 0;
-    //   case 1:
-    //     next_window_number = 0;
-    //   case 2:
-    //     next_window_number = 0;
-    // }
   }
   
   return true;

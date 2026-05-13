@@ -25,8 +25,8 @@ bool debugging_w::draw(){
   display->print("btn_4 = ");
   display->print(btn_4);
   display->print("\n");
-  // display->print("record time in tanks:");
-  // display->print(record_times_win[2]);
+  display->print("total time = ");
+  display->print(millis()/1000);
   display->display();
 
   return true;
