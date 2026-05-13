@@ -8,7 +8,6 @@ commander::commander() : current_window_number(1), input_v(6), display(SCREEN_WI
   display.setTextSize(1);
   display.setCursor(0, 0);
   
-  // display.setRotation(1);
   window_v.push_back(new debugging_w());
   // window_v.push_back(new debugging_w());
   window_v.push_back(new menu_w());
@@ -17,46 +16,39 @@ commander::commander() : current_window_number(1), input_v(6), display(SCREEN_WI
   for (int i = 0; i< window_v.size(); i++){
     window_v[i]->set_display(&display);
   }
-
-
-  pinMode(BUTTON_PIN_1, INPUT_PULLUP);
-  pinMode(BUTTON_PIN_2, INPUT_PULLUP);
-  pinMode(BUTTON_PIN_3, INPUT_PULLUP);
-  pinMode(BUTTON_PIN_4, INPUT_PULLUP);
-  analogReadResolution(12);
+  mill= millis();
 }
-
 commander::~commander(){}
 
-bool commander::set_input_v(){
-  int x = analogRead(X_PIN);
-  int y = analogRead(Y_PIN);
-  if (x>2500){
-    input_v[0] = -1;
-  } else if (x<1000){
-    input_v[0] = 1;
-  } else {
-    input_v[0] = 0;
-  }
-  if (y>2500){
-    input_v[1] = -1;
-  } else if (y<1000){
-    input_v[1] = 1;
-  } else {
-    input_v[1] = 0;
-  }
-  input_v[2] = !(digitalRead(BUTTON_PIN_1));
-  input_v[3] = !(digitalRead(BUTTON_PIN_2));
-  input_v[4] = !digitalRead(BUTTON_PIN_3);
-  input_v[5] = !digitalRead(BUTTON_PIN_4);
+bool commander::set_input_v(SemaphoreHandle_t mutex, int* arrr1){
+  xSemaphoreTake(mutex, portMAX_DELAY);
+    for (int i=0; i< ARRSIZE; i++)
+    {
+      input_v[i]=arrr1[i];
+    }
+    // конец критической секции
+    xSemaphoreGive(mutex);
   return true;
 }
 
-bool commander::process(){
-  set_input_v();
+bool commander::process(SemaphoreHandle_t mutex, int* arrr1){
+  set_input_v(mutex, arrr1);
   window_v[current_window_number]->set_next_window_number(current_window_number);
   window_v[current_window_number]->process_command(input_v);
   window_v[current_window_number]->draw();
+  if (current_window_number != (window_v[current_window_number]->get_next_window_number()))
+  {
+    unsigned long timer=millis();
+    if ((timer-mill) > window_v[current_window_number]->record_time)
+    {
+      window_v[current_window_number]->record_time = timer-mill; 
+      window_v[0]->record_times_win[current_window_number] = (timer-mill)/1000;
+      Serial.println("TIMER-MIL:");
+      Serial.println(String(timer-mill));
+      Serial.println(String(window_v[0]->record_times_win[current_window_number]));
+    }
+    mill = timer;
+  }
   current_window_number = window_v[current_window_number]->get_next_window_number();
   return true;
 }

@@ -1,6 +1,5 @@
 #include "window.h"
-
-window::window() : next_window_number(0){}
+window::window() : next_window_number(0), record_time(0), record_score(0), record_times_win(3) {}
 
 window::~window(){}
 
