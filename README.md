@@ -6,7 +6,7 @@
 <!-- ![](Images/Cover.jpg) -->
 
 <p align="center">
-  <img src="Images/Cover.jpg" alt="ESP32 Tetris Console" width="500">
+  <img src="Images/Product.jpg" alt="ESP32 Tetris Console" width="500">
 </p>
 
 <!-- [![Platform](https://img.shields.io/badge/platform-ESP32-blue)](https://www.espressif.com/)

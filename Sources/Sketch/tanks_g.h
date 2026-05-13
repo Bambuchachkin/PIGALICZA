@@ -4,7 +4,7 @@
 #include <vector>
 
 // ==================== Настройки ====================
-#define BOT_COUNT 2
+#define BOT_COUNT 8
 #define BULLET_COUNT 10
 #define PAUSE 3
 #define TERMINATE_BUTTON 3
@@ -83,4 +83,5 @@ class tanks_g {
     bool game_continue();
     void set_buttons(const std::vector<int>& buttons);
     void zeroing();
+    std::vector<int> get_info(); // player_x, player_y, score, time
 };

@@ -56,7 +56,7 @@ bool menu_w::process_command(std::vector<int> input_v){
   int total_items = items_v.size();
   
   // Навигация по джойстику
-  if(input_v[1] == 1 && scroll_available) { // Вниз
+  if(input_v[1] == -1 && scroll_available) { // Вниз
     scroll_available = false;
     if(selected_item_num < total_items - 1) {
       selected_item_num++;
@@ -65,7 +65,7 @@ bool menu_w::process_command(std::vector<int> input_v){
         scroll_offset++;
       }
     }
-  } else if(input_v[1] == -1 && scroll_available) { // Вверх
+  } else if(input_v[1] == 1 && scroll_available) { // Вверх
     scroll_available = false;
     if(selected_item_num > 0) {
       selected_item_num--;

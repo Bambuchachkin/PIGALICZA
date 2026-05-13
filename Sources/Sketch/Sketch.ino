@@ -17,15 +17,7 @@ void input_task(void *pvParameters){
   while(1) { 
     Input_worker.Reader();
     Input_worker.Semofor(resources->mutex, resources->arrr1);
-    // Serial.println("task1:");
-    // Serial.println(Input_worker.buffer[0]);
-    // Serial.println(Input_worker.buffer[1]);
-    // Serial.println(Input_worker.buffer[2]);
-    // Serial.println(Input_worker.buffer[3]);
-    // Serial.println(Input_worker.buffer[4]);
-    // Serial.println(Input_worker.buffer[5]);
-    // for(int i=0; i<ARRSIZE; i++) Serial.println(resources->arrr1[i]);
-    vTaskDelay(100 / portTICK_PERIOD_MS); // Задержка 1 секунда
+    vTaskDelay(30 / portTICK_PERIOD_MS);
   }
 }
 
@@ -34,9 +26,7 @@ void main_task(void *pvParameters){
   TaskResources* resources = (TaskResources*)pvParameters;
   while(1) {  
     Commander.process(resources->mutex, resources->arrr1);
-    // Serial.println("task2:");
-    // for(int i=0; i<ARRSIZE; i++) Serial.println(Commander.input_v[i]);
-    vTaskDelay(100 / portTICK_PERIOD_MS); // Задержка 2 секунды
+    vTaskDelay(100 / portTICK_PERIOD_MS);
   }
 }
 
@@ -48,7 +38,6 @@ void setup() {
   TaskResources* params = new TaskResources();
   params->arrr1 = arrr1;
   params->mutex = mutex;
-  // delay(1000);
 
   xTaskCreatePinnedToCore(
     input_task,    // Функция задачи
@@ -74,6 +63,4 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-
 }

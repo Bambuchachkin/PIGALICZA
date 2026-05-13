@@ -323,7 +323,7 @@ bool tanks_g::Bullet_Update(Bullet** bullets, int** Field) {
 void tanks_g::Bot_Init(Player** bots, int Number) {
     if (bots == nullptr) return;
 
-    for (int i = 0; i < Number && i < BOT_COUNT; i++) {
+    for (int i = 0; i < Number && i < BOT_COUNT*4; i++) {
         if (bots[i] == nullptr) continue;
 
         bots[i]->angle = 1;
@@ -342,6 +342,22 @@ void tanks_g::Bot_Init(Player** bots, int Number) {
         } else if (i == 3) {
             bots[i]->y_position = Clamp(HEIGHT - 4, 2, HEIGHT - 3);
             bots[i]->x_position = Clamp(WIDTH - 6, 2, WIDTH - 3);
+        } else if (i == 4) {
+            // Середина верхней стороны
+            bots[i]->y_position = Clamp(3, 2, HEIGHT - 3);
+            bots[i]->x_position = Clamp(WIDTH / 2, 2, WIDTH - 3);
+        } else if (i == 5) {
+            // Середина нижней стороны
+            bots[i]->y_position = Clamp(HEIGHT - 4, 2, HEIGHT - 3);
+            bots[i]->x_position = Clamp(WIDTH / 2, 2, WIDTH - 3);
+        } else if (i == 6) {
+            // Середина левой стороны
+            bots[i]->y_position = Clamp(HEIGHT / 2, 2, HEIGHT - 3);
+            bots[i]->x_position = Clamp(3, 2, WIDTH - 3);
+        } else if (i == 7) {
+            // Середина правой стороны
+            bots[i]->y_position = Clamp(HEIGHT / 2, 2, HEIGHT - 3);
+            bots[i]->x_position = Clamp(WIDTH - 4, 2, WIDTH - 3);
         } else {
             bots[i]->y_position = Clamp(2 + i, 2, HEIGHT - 3);
             bots[i]->x_position = Clamp(2 + i, 2, WIDTH - 3);
@@ -495,7 +511,7 @@ bool tanks_g::start_game() {
         Bots[i]->y_position = -1;
         Bots[i]->owner = 2;
     }
-    Bot_Init(Bots, BOT_COUNT);
+    Bot_Init(Bots, BOT_COUNT/4);
 
     score = 0;
     record = 0;
@@ -519,19 +535,19 @@ void tanks_g::set_buttons(const std::vector<int>& buttons) {
         BTN_FIRE = 0;
         return;
     }
-    if (buttons[0]==1){
+    if (buttons[1]==1){
         BTN_UP = 1;
         BTN_DOWN = 0;
     }
-    else if (buttons[0]==-1){
+    else if (buttons[1]==-1){
         BTN_UP = 0;
         BTN_DOWN = 1;
     }
-    if (buttons[1]==1){
+    if (buttons[0]==-1){
         BTN_LEFT = 1;
         BTN_RIGHT = 0;
     }
-    else if (buttons[1]==-1){
+    else if (buttons[0]==1){
         BTN_LEFT = 0;
         BTN_RIGHT = 1;
     }
@@ -588,9 +604,16 @@ bool tanks_g::continue_game() {
         }
     }
 
+    int BC = BOT_COUNT/4;
     if (aliveBots == 0) {
-        Bot_Init(Bots, BOT_COUNT);
-        for (int i = 0; i < BOT_COUNT; i++) {
+        if (score >= 2){
+            BC=BC*2;
+        }
+        if (score >= 10){
+            BC=2;
+        }
+        Bot_Init(Bots, BC);
+        for (int i = 0; i < BC; i++) {
             int dx = abs(User.x_position - Bots[i]->x_position);
             int dy = abs(User.y_position - Bots[i]->y_position);
             if (dx <= 2 && dy <= 2) {
@@ -606,4 +629,16 @@ bool tanks_g::continue_game() {
 
 bool tanks_g::game_continue() {
     return killCode != -1;
+}
+
+std::vector<int> tanks_g::get_info(){
+    std::vector<int> info;
+    info.push_back(User.x_position);
+    info.push_back(User.y_position);
+    info.push_back(score);
+    // Serial.println("info:");
+    // for (int i =0; i<2; i++){
+    //     Serial.println(String(info[i]));
+    // }
+    return info;
 }
