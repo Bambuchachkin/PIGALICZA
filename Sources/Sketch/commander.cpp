@@ -48,6 +48,12 @@ bool commander::process(SemaphoreHandle_t mutex, int* arrr1){
       Serial.println(String(window_v[3]->record_times_win[current_window_number]));
     }
     mill = timer;
+
+    if (window_v[current_window_number]->record_score < window_v[current_window_number]->score)
+    {
+      window_v[current_window_number]->record_score =  window_v[current_window_number]->score; 
+      window_v[3]->record_scores_win[current_window_number] = window_v[current_window_number]->score;
+    }
   }
   current_window_number = window_v[current_window_number]->get_next_window_number();
   return true;

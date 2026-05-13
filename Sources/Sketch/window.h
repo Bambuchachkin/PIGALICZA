@@ -15,7 +15,9 @@ class window{
     // unsigned long timer;
     unsigned long record_time;
     int record_score;
+    int score;
     std::vector<unsigned long> record_times_win;
+    std::vector<unsigned long> record_scores_win;
     int get_next_window_number();
     bool set_next_window_number(int num);
     bool set_display(Adafruit_SSD1306* disp);

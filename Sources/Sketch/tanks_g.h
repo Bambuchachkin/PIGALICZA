@@ -83,4 +83,5 @@ class tanks_g {
     void set_buttons(const std::vector<int>& buttons);
     void zeroing();
     std::vector<int> get_info(); // player_x, player_y, score, time
+    int get_score();
 };

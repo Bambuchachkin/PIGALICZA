@@ -37,10 +37,14 @@ bool record_w::draw(){
     
     // Название игры крупным шрифтом (без смещения)
     display->setCursor(20, yPos);
-    display->setTextSize(2);
+    display->setTextSize(1);
     display->print(items_v[item_index]);
-    display->print(":");
+    display->println(":");
+    display->print("  ");
     display->print(record_times_win[aboba]);
+    display->print("(time); ");
+    display->print(record_scores_win[aboba]);
+    display->println("(score)");
     display->setTextSize(1);
   }
 

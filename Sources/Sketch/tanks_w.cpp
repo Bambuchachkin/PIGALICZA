@@ -31,6 +31,7 @@ bool tanks_w::draw(){
     return true;
   }
   GAME->continue_game();
+  score = GAME->get_score();
 
   display->clearDisplay();
   display->setTextSize(1);
@@ -70,6 +71,10 @@ bool tanks_w::draw(){
             display->print(String(ch));
         }
   }
+  display->setCursor(0, 0);
+  display->print(score);
+  display->print("/");
+  display->println(record_score);
   display->display();
   // Serial.println("=== tanks_w finish drawing ===");
   return true;

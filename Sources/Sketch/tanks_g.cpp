@@ -642,3 +642,7 @@ std::vector<int> tanks_g::get_info(){
     // }
     return info;
 }
+
+int tanks_g::get_score(){
+    return score;
+}
