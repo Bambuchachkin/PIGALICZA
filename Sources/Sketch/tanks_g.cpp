@@ -610,7 +610,7 @@ bool tanks_g::continue_game() {
             BC=BC*2;
         }
         if (score >= 10){
-            BC=2;
+            BC=BC*2;
         }
         Bot_Init(Bots, BC);
         for (int i = 0; i < BC; i++) {

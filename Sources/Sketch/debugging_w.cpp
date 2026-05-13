@@ -1,6 +1,6 @@
 #include "debugging_w.h"
 
-debugging_w::debugging_w() : window()/*, record_times_win(3)*/{}
+debugging_w::debugging_w() : window(){}
 
 debugging_w::~debugging_w(){};
 
@@ -25,16 +25,10 @@ bool debugging_w::draw(){
   display->print("btn_4 = ");
   display->print(btn_4);
   display->print("\n");
-  display->print("record time in tanks:");
-  display->print(record_times_win[2]);
+  // display->print("record time in tanks:");
+  // display->print(record_times_win[2]);
   display->display();
 
-  Serial.println("Records");
-  for (int i =0; i<3; i++){
-    if (record_times_win[i]!=0){
-      Serial.println(String(record_times_win[i]));
-    }
-  }
   return true;
 }
 

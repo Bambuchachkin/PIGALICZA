@@ -1,24 +1,19 @@
-#include "menu_w.h"
+#include "record_w.h"
 
-menu_w::menu_w() : window(), selected_item_num(0), scroll_offset(0), scroll_available(true) {
-  Serial.println("=== menu_w() ===");
+record_w::record_w() :  window(), selected_item_num(0), scroll_offset(0), scroll_available(true) {
   items_v.push_back("Debug");
   items_v.push_back("Tanks");
-  items_v.push_back("Records");
 }
 
-menu_w::~menu_w(){}
+record_w::~record_w(){}
 
-bool menu_w::draw(){
+bool record_w::draw(){
   display->clearDisplay();
-  
-  // Заголовок
   display->setTextSize(1);
   display->setTextColor(SSD1306_WHITE);
   display->setCursor(0, 0);
-  display->println("GAMES");
+  display->println("RECORDS:");
   
-  // Сколько пунктов помещается на экране
   int max_visible = 2;
   int lineHeight = 22; // Фиксированная высота строки
   
@@ -34,24 +29,30 @@ bool menu_w::draw(){
     } else {
       display->setTextColor(SSD1306_WHITE);
     }
+
+    int aboba = 0;
+    if (item_index == 1){
+      aboba = 2;
+    }
     
     // Название игры крупным шрифтом (без смещения)
     display->setCursor(20, yPos);
     display->setTextSize(2);
-    display->println(items_v[item_index]);
+    display->print(items_v[item_index]);
+    display->print(":");
+    display->print(record_times_win[aboba]);
     display->setTextSize(1);
   }
-  
-  // Подсказки внизу
+
   display->setTextColor(SSD1306_WHITE);
   display->setCursor(0, 54);
-  display->print("down:Play up:Esc");
-  
+  display->print("up:Esc");
+
   display->display();
   return true;
 }
 
-bool menu_w::process_command(std::vector<int> input_v){
+bool record_w::process_command(std::vector<int> input_v){
   int max_visible = 2;
   int total_items = items_v.size();
   
@@ -79,24 +80,8 @@ bool menu_w::process_command(std::vector<int> input_v){
   }
   
   // Кнопки выбора
-  if(input_v[2] == 1) {
-    if (selected_item_num == 0){
-      next_window_number = 0;
-    }
-    if (selected_item_num == 1){
-      next_window_number = 2;
-    }
-    if (selected_item_num == 2){
-      next_window_number = 3;
-    }
-    // switch(selected_item_num){
-    //   case 0: 
-    //     next_window_number = 0;
-    //   case 1:
-    //     next_window_number = 0;
-    //   case 2:
-    //     next_window_number = 0;
-    // }
+  if(input_v[3] == 1) { // BTN3 - Play
+    next_window_number = 1;
   }
   
   return true;

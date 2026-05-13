@@ -8,19 +8,13 @@
 #include "tanks_w.h"
 #include "debugging_w.h"
 #include "menu_w.h"
+#include "record_w.h"
 #define ARRSIZE  6
 #define SCREEN_WIDTH 128
 #define SCREEN_HEIGHT 64
 #define OLED_DC     16
 #define OLED_RST    17
 #define OLED_CS     19
-
-// const int X_PIN = 32;
-// const int Y_PIN = 33;
-// const int BUTTON_PIN_1 = 25;
-// const int BUTTON_PIN_2 = 26;
-// const int BUTTON_PIN_3 = 35;
-// const int BUTTON_PIN_4 = 34;
 
 class commander{
   private:

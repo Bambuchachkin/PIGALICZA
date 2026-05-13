@@ -12,7 +12,6 @@ class debugging_w : public window{
     int btn_3 = 0;
     int btn_4 = 0;
   public:
-    // std::vector<unsigned long> record_times_win;
     debugging_w();
     ~debugging_w();
     

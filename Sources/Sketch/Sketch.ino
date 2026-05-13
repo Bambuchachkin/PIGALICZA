@@ -1,15 +1,11 @@
-
 #define ARRSIZE  6
-
-
-
 #include "input_worker.h"
 #include "commander.h"
+
 struct TaskResources {
     int* arrr1;             // Указатель на массив в куче
     SemaphoreHandle_t mutex; // Хэндл семафора
 };
-
 
 void input_task(void *pvParameters){
   TaskResources* resources = (TaskResources*)pvParameters;
@@ -26,7 +22,7 @@ void main_task(void *pvParameters){
   TaskResources* resources = (TaskResources*)pvParameters;
   while(1) {  
     Commander.process(resources->mutex, resources->arrr1);
-    vTaskDelay(100 / portTICK_PERIOD_MS);
+    vTaskDelay(30 / portTICK_PERIOD_MS);
   }
 }
 
