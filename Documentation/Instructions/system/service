@@ -1,0 +1,14 @@
+[Unit]
+Description=C++ Backend
+After=network.target mysql.service
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/my_cpp_app
+ExecStart=/root/my_cpp_app/my_server
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Моя статистика</title>
+    <style>
+        body { font-family: sans-serif; margin: 2rem; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <h1>Статистика посещений</h1>
+    <table id="stats-table">
+        <thead>
+            <tr><th>IP-адрес</th><th>Время визита</th></tr>
+        </thead>
+        <tbody id="stats-body">
+            <tr><td colspan="2">Загрузка...</td></tr>
+        </tbody>
+    </table>
+
+    <script>
+        async function loadStats() {
+            try {
+                const response = await fetch('/api/stats');
+                if (!response.ok) throw new Error('Ошибка загрузки');
+                const data = await response.json();
+
+                const tableBody = document.getElementById('stats-body');
+                tableBody.innerHTML = ''; // Очищаем таблицу
+
+                data.forEach(visit => {
+                    const row = tableBody.insertRow();
+                    row.insertCell(0).textContent = visit.ip;
+                    row.insertCell(1).textContent = visit.visit_time;
+                });
+            } catch (error) {
+                console.error('Ошибка:', error);
+                document.getElementById('stats-body').innerHTML = '<tr><td colspan="2">Не удалось загрузить данные</td></tr>';
+            }
+        }
+
+        // Загружаем данные при загрузке страницы и каждые 30 секунд
+        loadStats();
+        setInterval(loadStats, 30000);
+    </script>
+</body>
+</html>
