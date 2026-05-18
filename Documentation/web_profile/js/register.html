@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 400px; margin: 50px auto; padding: 20px; }
+        input { width: 100%; padding: 10px; margin: 8px 0; box-sizing: border-box; }
+        button { width: 100%; padding: 10px; background: #4CAF50; color: white; border: none; cursor: pointer; }
+        button:hover { background: #45a049; }
+        .message { margin-top: 15px; font-weight: bold; }
+        .error { color: red; }
+        .success { color: green; }
+        a { display: block; margin-top: 20px; text-align: center; }
+    </style>
+</head>
+<body>
+    <h2>Регистрация</h2>
+    <form id="registerForm">
+        <input type="text" id="username" placeholder="Логин" required minlength="3" maxlength="50">
+        <input type="password" id="password" placeholder="Пароль" required minlength="6">
+        <button type="submit">Зарегистрироваться</button>
+    </form>
+    <div id="message" class="message"></div>
+    <a href="/login.html">Уже есть аккаунт? Войти</a>
+    <a href="/">На главную</a>
+
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+            const msgDiv = document.getElementById('message');
+            msgDiv.className = 'message';
+            msgDiv.textContent = '';
+
+            if (!username || !password) {
+                msgDiv.textContent = 'Заполните все поля';
+                msgDiv.classList.add('error');
+                return;
+            }
+            if (password.length < 6) {
+                msgDiv.textContent = 'Пароль должен быть не менее 6 символов';
+                msgDiv.classList.add('error');
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+                const data = await response.json().catch(() => null);
+                if (response.ok) {
+                    msgDiv.textContent = data?.message || 'Регистрация успешна!';
+                    msgDiv.classList.add('success');
+                    setTimeout(() => { window.location.href = '/login.html'; }, 1500);
+                } else {
+                    msgDiv.textContent = data?.message || 'Ошибка при регистрации';
+                    msgDiv.classList.add('error');
+                }
+            } catch (error) {
+                msgDiv.textContent = 'Нет соединения с сервером';
+                msgDiv.classList.add('error');
+            }
+        });
+    </script>
+</body>
+</html>
