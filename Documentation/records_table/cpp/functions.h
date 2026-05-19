@@ -5,6 +5,8 @@ namespace sql {
     class Connection;
 }
 
+std::string random_digit_string_5();
+
 std::string hash_password(const std::string& password);
 
 bool verify_password(const std::string& password, const std::string& stored);

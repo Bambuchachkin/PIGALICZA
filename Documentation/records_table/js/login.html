@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 400px; margin: 50px auto; padding: 20px; }
+        input { width: 100%; padding: 10px; margin: 8px 0; box-sizing: border-box; }
+        button { width: 100%; padding: 10px; background: #2196F3; color: white; border: none; cursor: pointer; }
+        button:hover { background: #0b7dda; }
+        .error { color: red; margin-top: 10px; }
+        a { display: block; margin-top: 15px; text-align: center; }
+    </style>
+</head>
+<body>
+    <h2>Вход</h2>
+    <form id="loginForm">
+        <input type="text" id="username" placeholder="Логин" required>
+        <input type="password" id="password" placeholder="Пароль" required>
+        <button type="submit">Войти</button>
+    </form>
+    <div id="error" class="error"></div>
+    <a href="/register.html">Нет аккаунта? Зарегистрироваться</a>
+    <a href="/">На главную</a>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+            const errorDiv = document.getElementById('error');
+            errorDiv.textContent = '';
+
+            console.log('Отправляю запрос на /api/login...');
+            try {
+                const resp = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',   // ключевая строка: передаём и сохраняем куки
+                    body: JSON.stringify({ username, password })
+                });
+
+                console.log('Статус ответа:', resp.status);
+                const data = await resp.json().catch(() => null);
+                console.log('Тело ответа:', data);
+
+                if (resp.ok) {
+                    window.location.href = '/profile.html';
+                } else {
+                    errorDiv.textContent = (data && data.message) ? data.message : 'Ошибка входа';
+                }
+            } catch (err) {
+                console.error('Fetch error:', err);
+                errorDiv.textContent = 'Нет соединения с сервером';
+            }
+        });
+
+        // Автоперенаправление, если уже залогинены
+        (async () => {
+            try {
+                const resp = await fetch('/api/me', { credentials: 'include' });
+                if (resp.ok) window.location.href = '/profile.html';
+            } catch(e) {}
+        })();
+    </script>
+</body>
+</html>

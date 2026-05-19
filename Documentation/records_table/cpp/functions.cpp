@@ -5,6 +5,25 @@
 #include <vector>
 #include <stdexcept>
 
+std::string random_digit_string_5() {
+    const int length = 5;
+    std::string result;
+    result.reserve(length);
+    unsigned char byte;
+    for (int i = 0; i < length; ++i) {
+        while (true) {
+            if (RAND_bytes(&byte, 1) != 1) {
+                throw std::runtime_error("RAND_bytes failed in random_digit_string_5");
+            }
+            if (byte < 250) {
+                result.push_back('0' + (byte % 10));
+                break;
+            }
+        }
+    }
+    return result;
+}
+
 std::string to_hex(const unsigned char* data, size_t len) {
     static const char hex[] = "0123456789abcdef";
     std::string result;

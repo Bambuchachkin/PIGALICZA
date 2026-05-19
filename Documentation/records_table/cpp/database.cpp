@@ -1,5 +1,6 @@
 #include "database.h"
 #include "functions.h"
+#include <mysql_connection.h>
 #include <mysql_driver.h>
 #include <cppconn/prepared_statement.h>
 #include <cppconn/resultset.h>
@@ -24,9 +25,10 @@ std::pair<int, std::string> Database::registerUser(const std::string& username, 
 
         std::string password_hash = hash_password(password);
 
-        std::unique_ptr<sql::PreparedStatement> pstmt(con->prepareStatement("INSERT INTO users (username, password_hash) VALUES (?, ?)"));
+        std::unique_ptr<sql::PreparedStatement> pstmt(con->prepareStatement("INSERT INTO users (username, password_hash, verification_code) VALUES (?, ?, ?)"));
         pstmt->setString(1, username);
         pstmt->setString(2, password_hash);
+        pstmt->setString(3, random_digit_string_5());
         pstmt->executeUpdate();
         return {201, R"({"message":"Registered"})"};
     } catch (sql::SQLException& e) {
@@ -55,6 +57,11 @@ std::pair<int, std::string> Database::loginUser(const std::string& username, con
         ins_sess->setString(1, out_session_id);
         ins_sess->setInt(2, user_id);
         ins_sess->executeUpdate();
+
+        std::unique_ptr<sql::PreparedStatement> pstmt(con->prepareStatement("UPDATE users SET verification_code = ? WHERE username = ?"));
+        pstmt->setString(1, username);
+        pstmt->setString(2, random_digit_string_5());
+        
         return {200, R"({"message":"Login successful"})"};
     } catch (sql::SQLException& e) {
         std::cerr << "Login error: " << e.what() << std::endl;
@@ -88,6 +95,18 @@ std::string Database::getUserBySession(const std::string& session_id) {
     return "";
 }
 
+std::string Database::getVerificationCodeBySession(const std::string& session_id) {
+    int user_id = getUserIdFromSession(session_id);
+    if (user_id == 0) return "";
+    try {
+        std::unique_ptr<sql::PreparedStatement> pstmt(con->prepareStatement("SELECT verification_code FROM users WHERE id = ?"));
+        pstmt->setInt(1, user_id);
+        std::unique_ptr<sql::ResultSet> res(pstmt->executeQuery());
+        if (res->next()) return res->getString("verification_code");
+    } catch (...) {}
+    return "";
+}
+
 void Database::logout(const std::string& session_id) {
     try {
         std::unique_ptr<sql::PreparedStatement> pstmt(con->prepareStatement("DELETE FROM sessions WHERE session_id = ?"));
@@ -96,21 +115,47 @@ void Database::logout(const std::string& session_id) {
     } catch (...) {}
 }
 
-// std::string Database::getStats() {
-//     json arr = json::array();
-//     try {
-//         std::unique_ptr<sql::Statement> stmt(con->createStatement());
-//         std::unique_ptr<sql::ResultSet> res(
-//             stmt->executeQuery("SELECT ip_address, visit_time FROM visits ORDER BY id DESC LIMIT 10"));
-//         while (res->next()) {
-//             json obj;
-//             obj["ip"] = res->getString("ip_address");
-//             obj["visit_time"] = res->getString("visit_time");
-//             arr.push_back(obj);
-//         }
-//     } catch (sql::SQLException& e) {
-//         std::cerr << "Stats error: " << e.what() << std::endl;
-//         return "[]";
-//     }
-//     return arr.dump();
-// }
+std::string Database::getLeaderboard(const std::string& game){
+    nlohmann::json result;
+    std::string table = game+"_records";
+
+    nlohmann::json top_score = nlohmann::json::array();
+    nlohmann::json top_time = nlohmann::json::array();
+    nlohmann::json current_p;
+    std::string score_query = 
+            "SELECT u.username, r.score, r.created_at "
+            "FROM " + table + " r "
+            "JOIN users u ON r.user_id = u.id "
+            "ORDER BY r.score DESC LIMIT 30";
+    std::string time_query = 
+            "SELECT u.username, r.time, r.created_at "
+            "FROM " + table + " r "
+            "JOIN users u ON r.user_id = u.id "
+            "ORDER BY r.time DESC LIMIT 30";
+
+    try {
+        std::unique_ptr<sql::Statement> stmt(con->createStatement());
+        std::unique_ptr<sql::ResultSet> res_score(stmt->executeQuery(score_query));
+        while (res_score->next()) {
+            current_p["username"] = res_score->getString("username");
+            current_p["score"] = res_score->getString("score");
+            current_p["created_at"] = res_score->getString("created_at");
+            top_score.push_back(current_p);
+        }
+        result["top_score"] = top_score;
+
+        std::unique_ptr<sql::ResultSet> res_time(stmt->executeQuery(time_query));
+        while (res_time->next()) {
+            current_p["username"] = res_time->getString("username");
+            current_p["time"] = res_time->getString("time");
+            current_p["created_at"] = res_time->getString("created_at");
+            top_time.push_back(current_p);
+        }
+        result["top_time"] = top_time;
+
+    } catch (sql::SQLException& e) {
+        std::cerr << "Liderboard error: " << e.what() << std::endl;
+        return "[]";
+    }
+    return result.dump();
+}

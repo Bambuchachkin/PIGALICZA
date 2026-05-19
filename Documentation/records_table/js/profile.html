@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Профиль</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: 50px auto; padding: 20px; }
+        .message { font-size: 1.4em; margin: 20px 0; color: #2e7d32; }
+        p { font-size: 1.1em; }
+        button { padding: 10px 20px; background: #f44336; color: white; border: none; cursor: pointer; }
+        button:hover { background: #da190b; }
+        a { display: inline-block; margin-top: 15px; }
+    </style>
+</head>
+<body>
+    <h2>Профиль</h2>
+    <div class="message" id="welcome">Hello. Welcome to the project PIGALICZA. Have fun!</div>
+    <p id="usernameDisplay"></p>
+    <p id="verificationCodeDisplay" style="font-weight: bold; color: #1565C0;"></p>
+    <button id="logoutBtn">Выйти</button>
+    <br><br>
+    <a href="/">На главную</a>
+
+    <script>
+        async function checkAuth() {
+            try {
+                const resp = await fetch('/api/me', { credentials: 'include' });
+                if (!resp.ok) {
+                    window.location.href = '/login.html';
+                    return;
+                }
+                const data = await resp.json();
+                document.getElementById('usernameDisplay').textContent = 'Вы вошли как: ' + data.username;
+                if (data.verification_code) {
+                    document.getElementById('verificationCodeDisplay').textContent = 'Ваш код верификации: ' + data.verification_code;
+                } else {
+                    document.getElementById('verificationCodeDisplay').textContent = 'Код верификации не найден';
+                }
+            } catch (e) {
+                window.location.href = '/login.html';
+            }
+        }
+
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+            await fetch('/api/logout', { method: 'POST', credentials: 'include' });
+            window.location.href = '/login.html';
+        });
+
+        checkAuth();
+    </script>
+</body>

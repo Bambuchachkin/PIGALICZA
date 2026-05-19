@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Таблица лидеров</title>
+    <style>
+        body { font-family: Arial; text-align: center; margin-top: 50px; }
+        button { padding: 15px 30px; margin: 10px; font-size: 18px; cursor: pointer; }
+        .tanks { background: #4CAF50; color: white; border: none; }
+        .races { background: #2196F3; color: white; border: none; }
+        a { display: block; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h2>Выберите игру</h2>
+    <button class="tanks" onclick="location.href='/leaderboard.html?game=tanks'">Tanks</button>
+    <button class="races" onclick="location.href='/leaderboard.html?game=races'">Races</button>
+    <br><a href="/">На главную</a>
+</body>
+</html>

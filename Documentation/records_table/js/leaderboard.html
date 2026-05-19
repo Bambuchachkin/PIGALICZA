@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Лидерборд</title>
+    <style>
+        body { font-family: Arial; margin: 20px; }
+        h2 { text-align: center; }
+        .container { display: flex; justify-content: space-around; flex-wrap: wrap; }
+        .table-box { width: 45%; margin: 10px; border: 1px solid #ccc; padding: 10px; border-radius: 8px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .error { color: red; text-align: center; }
+        a { display: block; text-align: center; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h2 id="gameTitle"></h2>
+    <div class="container">
+        <div class="table-box">
+            <h3>🏆 Лучшие по очкам</h3>
+            <table id="scoreTable">
+                <thead><tr><th>Игрок</th><th>Очки</th><th>Дата рекорда</th></tr></thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        <div class="table-box">
+            <h3>⏱️ Лучшее время (сек)</h3>
+            <table id="timeTable">
+                <thead><tr><th>Игрок</th><th>Время</th><th>Дата рекорда</th></tr></thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+    <a href="/leaderboard_choice.html">← Назад к выбору игры</a>
+    <a href="/">На главную</a>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const game = urlParams.get('game');
+        if (!game || (game !== 'tanks' && game !== 'races')) {
+            document.body.innerHTML = '<div class="error">Неверная игра. <a href="/leaderboard_choice.html">Выберите игру</a></div>';
+        } else {
+            document.getElementById('gameTitle').innerText = game === 'tanks' ? 'TANKS — Лидерборд' : 'RACES — Лидерборд';
+            fetch(`/api/leaderboard/${game}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.error) throw new Error(data.error);
+                    // Заполняем таблицу по очкам
+                    const scoreTbody = document.querySelector('#scoreTable tbody');
+                    scoreTbody.innerHTML = '';
+                    data.top_score.forEach(entry => {
+                        const row = `<tr><td>${escapeHtml(entry.username)}</td><td>${entry.value}</td><td>${new Date(entry.achieved_at).toLocaleString()}</td></tr>`;
+                        scoreTbody.insertAdjacentHTML('beforeend', row);
+                    });
+                    // Заполняем таблицу по времени
+                    const timeTbody = document.querySelector('#timeTable tbody');
+                    timeTbody.innerHTML = '';
+                    data.top_time.forEach(entry => {
+                        const row = `<tr><td>${escapeHtml(entry.username)}</td><td>${entry.value}</td><td>${new Date(entry.achieved_at).toLocaleString()}</td></tr>`;
+                        timeTbody.insertAdjacentHTML('beforeend', row);
+                    });
+                })
+                .catch(err => {
+                    document.querySelector('.container').innerHTML = `<div class="error">Ошибка загрузки: ${err.message}</div>`;
+                });
+        }
+
+        function escapeHtml(str) {
+            return str.replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
+        }
+    </script>
+</body>
+</html>

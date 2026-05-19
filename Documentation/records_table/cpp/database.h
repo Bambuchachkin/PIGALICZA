@@ -24,6 +24,6 @@ public:
     std::string getUserBySession(const std::string& session_id);
     void logout(const std::string& session_id);
 
-    // std::string getStats();
+    std::string getLeaderboard(const std::string& game);
     sql::Connection* getConnection() { return con.get(); }
 };

@@ -42,9 +42,12 @@ int main() {
         if (session_id.empty()) return crow::response(401, R"({"message":"Not authenticated"})");
         std::string username = db.getUserBySession(session_id);
         if (username.empty()) return crow::response(401, R"({"message":"Session invalid or expired"})");
+        std::string verification_code = db.getVerificationCodeBySession(session_id);
+        if (verification_code.empty()) return crow::response(401, R"({"message":"Session invalid or expired"})");
 
         nlohmann::json result;
         result["username"] = username;
+        result["verification_code"] = verification_code;
         return crow::response(200, result.dump());
     });
 
@@ -63,6 +66,13 @@ int main() {
         crow::response resp(200, R"({"message":"Logged out"})");
         resp.set_header("Content-Type", "application/json");
         resp.set_header("Set-Cookie", "session_id=; Path=/; HttpOnly; Max-Age=0");
+        return resp;
+    });
+
+    CROW_ROUTE(app, "/api/leaderboard/<string>").methods(crow::HTTPMethod::GET)([&db](const crow::request& req, std::string game) {
+        std::string json = db.getLeaderboard(game);
+        crow::response resp(200, json);
+        resp.set_header("Content-Type", "application/json");
         return resp;
     });
 
