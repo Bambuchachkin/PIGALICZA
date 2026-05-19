@@ -22,6 +22,7 @@ public:
 
     int getUserIdFromSession(const std::string& session_id);
     std::string getUserBySession(const std::string& session_id);
+    std::string getVerificationCodeBySession(const std::string& session_id);
     void logout(const std::string& session_id);
 
     std::string getLeaderboard(const std::string& game);

@@ -47,18 +47,18 @@
                 .then(res => res.json())
                 .then(data => {
                     if (data.error) throw new Error(data.error);
-                    // Заполняем таблицу по очкам
+                    // Заполняем таблицу по очкам (поле score)
                     const scoreTbody = document.querySelector('#scoreTable tbody');
                     scoreTbody.innerHTML = '';
                     data.top_score.forEach(entry => {
-                        const row = `<tr><td>${escapeHtml(entry.username)}</td><td>${entry.value}</td><td>${new Date(entry.achieved_at).toLocaleString()}</td></tr>`;
+                        const row = `<tr><td>${escapeHtml(entry.username)}</td><td>${entry.score}</td><td>${new Date(entry.created_at.replace(' ', 'T')).toLocaleString()}</td></tr>`;
                         scoreTbody.insertAdjacentHTML('beforeend', row);
                     });
-                    // Заполняем таблицу по времени
+                    // Заполняем таблицу по времени (поле time)
                     const timeTbody = document.querySelector('#timeTable tbody');
                     timeTbody.innerHTML = '';
                     data.top_time.forEach(entry => {
-                        const row = `<tr><td>${escapeHtml(entry.username)}</td><td>${entry.value}</td><td>${new Date(entry.achieved_at).toLocaleString()}</td></tr>`;
+                        const row = `<tr><td>${escapeHtml(entry.username)}</td><td>${entry.time}</td><td>${new Date(entry.created_at.replace(' ', 'T')).toLocaleString()}</td></tr>`;
                         timeTbody.insertAdjacentHTML('beforeend', row);
                     });
                 })
