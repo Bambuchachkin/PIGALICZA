@@ -87,6 +87,12 @@ ESP32 выступает в роли центрального процессор
 
 ---
 
+Сайт проекта
+
+<p align="center">
+  <img src="Images/Web_1.png" alt="ESP32 Tetris Console" width="500">
+</p>
+
 
 Эскиз внешнего вида консоли
 
@@ -102,13 +108,12 @@ ESP32 выступает в роли центрального процессор
   <img src="Images/circuit.png" alt="ESP32 Tetris Console" width="500">
 </p>
 
-<!-- ![](Images/circuit.png) -->
 
 <p align="center">
   <img src="Images/Circuit.jpg" alt="ESP32 Tetris Console" width="500">
 </p>
 
-<!-- ![](Images/Circuit.jpg) -->
+
 
 3D-модель корпуса консоли
 
@@ -116,14 +121,12 @@ ESP32 выступает в роли центрального процессор
   <img src="Images/3D_1.jpg" alt="ESP32 Tetris Console" width="500">
 </p>
 
-<!-- ![](Images/circuit.png) -->
+
 <p align="center">
   <img src="Images/3D_2.jpg" alt="ESP32 Tetris Console" width="500">
 </p>
 
-<!-- ![](Images/circuit.png) -->
+
 <p align="center">
   <img src="Images/3D_3.jpg" alt="ESP32 Tetris Console" width="500">
 </p>
-
-<!-- ![](Images/circuit.png) -->
