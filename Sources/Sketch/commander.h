@@ -9,6 +9,7 @@
 #include "debugging_w.h"
 #include "menu_w.h"
 #include "record_w.h"
+#include "server_w.h"
 #define ARRSIZE  6
 #define SCREEN_WIDTH 128
 #define SCREEN_HEIGHT 64

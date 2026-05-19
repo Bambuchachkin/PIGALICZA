@@ -5,6 +5,7 @@ menu_w::menu_w() : window(), selected_item_num(0), scroll_offset(0), scroll_avai
   items_v.push_back("Debug");
   items_v.push_back("Tanks");
   items_v.push_back("Records");
+  items_v.push_back("Auto-tion");
 }
 
 menu_w::~menu_w(){}
@@ -89,6 +90,9 @@ bool menu_w::process_command(std::vector<int> input_v){
         break;
       case 2:
         next_window_number = 3;
+        break;
+      case 3:
+        next_window_number = 4;
         break;
     }
   }

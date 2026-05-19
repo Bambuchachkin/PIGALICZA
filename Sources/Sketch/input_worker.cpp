@@ -45,6 +45,16 @@ void input_worker::Reader()
 void input_worker::Semofor(SemaphoreHandle_t mutex, int* arrr1)
 {
   xSemaphoreTake(mutex, portMAX_DELAY);
+    // bool allZero = true;
+    // for (int i = 0; i < ARRSIZE; i++) {
+    //     if (buffer[i] != 0) {
+    //         allZero = false;
+    //         break;
+    //     }
+    // }
+    // if (allZero) {
+    //     delay(100);
+    // }
     for (int i=0; i< ARRSIZE; i++)
     {
       arrr1[i]=buffer[i];

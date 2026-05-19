@@ -12,6 +12,7 @@ commander::commander() : current_window_number(1), input_v(6), display(SCREEN_WI
   window_v.push_back(new menu_w());
   window_v.push_back(new tanks_w());
   window_v.push_back(new record_w());
+  window_v.push_back(new server_w());
 
   for (int i = 0; i< window_v.size(); i++){
     window_v[i]->set_display(&display);
@@ -25,6 +26,7 @@ bool commander::set_input_v(SemaphoreHandle_t mutex, int* arrr1){
     for (int i=0; i< ARRSIZE; i++)
     {
       input_v[i]=arrr1[i];
+      arrr1[i]=0;
     }
     // конец критической секции
     xSemaphoreGive(mutex);
