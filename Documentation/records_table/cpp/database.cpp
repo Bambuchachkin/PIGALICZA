@@ -58,10 +58,10 @@ std::pair<int, std::string> Database::loginUser(const std::string& username, con
         ins_sess->setInt(2, user_id);
         ins_sess->executeUpdate();
 
-        std::unique_ptr<sql::PreparedStatement> aboba(con->prepareStatement("UPDATE users SET verification_code = ? WHERE username = ?"));
-        aboba->setString(2, username);
-        aboba->setString(1, random_digit_string_5());
-        aboba->executeUpdate();
+        // std::unique_ptr<sql::PreparedStatement> aboba(con->prepareStatement("UPDATE users SET verification_code = ? WHERE username = ?"));
+        // aboba->setString(2, username);
+        // aboba->setString(1, random_digit_string_5());
+        // aboba->executeUpdate();
         
         return {200, R"({"message":"Login successful"})"};
     } catch (sql::SQLException& e) {
